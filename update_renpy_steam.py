@@ -117,6 +117,12 @@ def main():
     steamworks("win64/steam_api64.dll", "lib/windows-x86_64")
 
 
+    print()
+    print("The Steam API was updated. You can delete this file and {}.".format(steamworks_zip))
+    print("I'm making a note here, huge success.")
+    print()
+
+
 if __name__ == "__main__":
     try:
         main()

@@ -139,9 +139,11 @@ to open the on-screen keyboard for players using a controller, or have your
 own built-in entry that allows users to enter text in their language using only
 a controller."
 
-Many games will trivially satisfy this requirement, by not requiring text
-input. Assuming yours doesn't, what you need to do depends on the version
-of Ren'Py that you are running.
+**Many games will trivially satisfy this requirement, by not requiring text
+input.** In that case, great - you can ignore the rest of ths section.
+
+If your game requires keyboard input - perhaps it prompts for the main character's
+name, what you need to do depends on the version of Ren'Py that you are running.
 
 Ren'Py 7.5.0 or Later
 ---------------------
@@ -178,15 +180,138 @@ These can be set with the define statement::
 
     define _renpysteam.keyboard_shift = False
 
-
 Ren'Py 7.4.11 or Earlier
 ------------------------
 
-...
+To use the floating keyboard with Ren'Py 7.4.11 or earlier, it's necessary
+to upgrade Ren'Py's steam support to the version included in Ren'Py 7.5.
+This upgraded has been tested to work with Ren'Py 7.3.5 and 7.4.11, and will
+likely work with some but not all older versions.
+
+The upgrade may be performed on a Ren'Py SDK or an unpacked Ren'Py game
+distribution. For the purpose of these instructions, the base directory
+is the directory with the renpy.sh or gamename.sh file in it.
+
+* Install any version of `Python 3 <https://www.python.org/downloads/>`_ on your computer.
+* Download `update_renpy_steam.py <https://raw.githubusercontent.com/renpy/steam-deck-guide/main/update_renpy_steam.py>`_ and place it into the  base directory.
+* Download the latest Steamworks SDK zip file from `Steamworks <https://partner.steamgames.com/dashboard>`_, and place it into the base directory.
+
+The Steamworks SDK should have a filename like steamworks_sdk_153a.zip. When
+ready, your base directory will look like:
+
+.. image:: images/sdk.png
+
+You'll then want to run update_renpy_steam.py. Make sure you run in in Python,
+not open it in a text editor - you may need to right click and open with
+Python to be sure of this. When this script completes without errors, your
+game or the SDK is updated. You should delete steamworks_sdk_153a.zip and update_renpy_steam.py so these
+files won't be distributed.
+
+After this step, you have the same Steam support that's included in Ren'Py
+7.5.0 and later, with support for the floating keyboard.
 
 
+Variant
+=======
+
+When the Steam support is at the 7.5.0 version (or upgraded as described
+above), Ren'Py will define a "steam_deck" `screen variant <https://www.renpy.org/doc/html/screens.html#screen-variants>`_ when the Steam Deck
+hardware is detected.
+
+This can be used to select alternate screens, or checked with the renpy.variant
+function::
+
+    screen test():
+
+        vbox:
+
+            text "Something common."
+
+            if renpy.variant("steam_deck"):
+                text "On Steam Deck."
+            else:
+                text "On other platform."
 
 
+Other Requirements
+==================
+
+Be sure to check `valve's page <https://partner.steamgames.com/doc/steamdeck/compat>`_ to make
+sure these requirements haven't been updated.
+
+Controller Glyphs
+-----------------
+
+"When using Steam Deck's physical controls, on-screen glyphs must either match
+Deck button names, or match Xbox 360/One button names. Mouse and keyboard
+glyphs should not be shown if they are not the active input. Interacting
+with any physical Deck controls using the default configuration must not
+show non-controller glyphs."
+
+Ren'Py does not display glyphs by default, so this requirement is trivially
+satisifed. If your game displays glyphs, it will have to be changed to make
+sure the correct glyphs are displayed, perhaps using screen variants.
+
+Resolution Support
+------------------
+
+"The game must run at a resolution supported by Steam Deck."
+
+All modern Ren'Py games adjust to the size of the window the game is
+displayed in.
+
+Default Configuration
+---------------------
+
+"The game must ship with a default configuration on Deck that results in a
+playable framerate."
+
+The Steam Deck hardware is fairly powerful, so this is unlikely to be a
+problem. Please let the reviewers know that Ren'Py may vary the framerate,
+lowering it to save power on static scenes.
+
+Text Legibility
+----------------
+
+"interface text must be easily readable at a distance of 12 inches/30 cm from the screen.
+ In other words, the smallest on-screen font character should never fall below 9 pixels
+ in height at 1280x800."
+
+Ren'Py's default text is around 22px high at 1280x720, and text scales with
+window size. There should be ample margin for size changes.
+
+It may make sense for some games to activate the small variant, meant for mobile
+devices, when on a Steam Deck, using:::
+
+    init python:
+        if renpy.variant("steam_deck"):
+            config.variants.remove("large")
+            config.variants.insert(0, "small")
+
+This could be the case if the game wants to re-use a moble UI on Steam Deck.
+
+No Device Compatibility Warnings
+--------------------------------
+
+"the app must not present the user with information that the Deck software
+(ie., specific Linux distribution) or hardware (ie., GPU) is unsupported."
+
+Ren'Py doesn't perform such checks.
+
+Launchers
+---------
+
+"For games with launchers, those launchers also must meet the requirements listed here"
+
+Ren'Py games do not require a launcher to run.
 
 
-This version includes built-in support for managing the Steam Deck keyboard
+Troubleshooting
+===============
+
+Typed text shows up as '1's.
+----------------------------
+
+This seems to be a problem with Ren'Py and Steam Play. It's suggested to create
+a Steam OS + Linux build to ensure that input functions without a translation
+layer.
