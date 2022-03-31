@@ -274,8 +274,8 @@ Text Legibility
 ----------------
 
 "interface text must be easily readable at a distance of 12 inches/30 cm from the screen.
- In other words, the smallest on-screen font character should never fall below 9 pixels
- in height at 1280x800."
+In other words, the smallest on-screen font character should never fall below 9 pixels
+in height at 1280x800."
 
 Ren'Py's default text is around 22px high at 1280x720, and text scales with
 window size. There should be ample margin for size changes.
@@ -309,9 +309,6 @@ Ren'Py games do not require a launcher to run.
 Troubleshooting
 ===============
 
-Typed text shows up as '1's.
-----------------------------
-
-This seems to be a problem with Ren'Py and Steam Play. It's suggested to create
+*Typed text shows up as '1's.* This seems to be a problem with Ren'Py and Steam Play. It's suggested to create
 a Steam OS + Linux build to ensure that input functions without a translation
 layer.
