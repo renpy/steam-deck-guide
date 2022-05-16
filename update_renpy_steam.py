@@ -85,25 +85,15 @@ def main():
     find_steamworks_zip()
 
     # Download the Ren'Py files.
-    if False:
 
-        print()
-        print("Downloading Ren'Py files:")
-        print()
+    print()
+    print("Downloading Ren'Py files:")
+    print()
 
-        download("renpy/common/00achievement.rpy")
-        download("renpy/common/00steam.rpy")
-        download("lib/python2.7/steamapi.py")
-        download("lib/pythonlib2.7/steamapi.py")
-
-#    420954  2021-12-04 19:43   sdk/redistributable_bin/linux32/libsteam_api.so
-#    416413  2021-12-04 19:43   sdk/redistributable_bin/linux64/libsteam_api.so
-#    609584  2021-12-04 19:42   sdk/redistributable_bin/osx/libsteam_api.dylib
-#    263080  2021-12-04 19:43   sdk/redistributable_bin/steam_api.dll
-#    370310  2021-12-04 19:44   sdk/redistributable_bin/steam_api.lib
-#    295336  2021-12-04 19:43   sdk/redistributable_bin/win64/steam_api64.dll
-#    367146  2021-12-04 19:45   sdk/redistributable_bin/win64/steam_api64.lib
-
+    download("renpy/common/00achievement.rpy")
+    download("renpy/common/00steam.rpy")
+    download("lib/python2.7/steamapi.py")
+    download("lib/pythonlib2.7/steamapi.py")
 
     print()
     print("Unpacking steamworks:")
